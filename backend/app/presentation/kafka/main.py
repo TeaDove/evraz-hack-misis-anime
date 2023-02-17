@@ -37,7 +37,8 @@ def _set_consumer() -> KafkaConsumer:
         TopicPartition(topic, partition) for partition in partitions
     )
     consumer.assign(topic_partitions)
-    consumer.seek_to_beginning(*topic_partitions)
+    if app_settings.kafka_read_from_start:
+        consumer.seek_to_beginning(*topic_partitions)
     return consumer
 
 
