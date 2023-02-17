@@ -1,13 +1,6 @@
-from pydantic import BaseModel, BaseSettings
+from pydantic import BaseSettings
 
 from kafka import KafkaConsumer
-
-
-class KafkaSettings(BaseModel):
-    host: str
-    topic: str
-    user: str
-    password: str
 
 
 class Settings(BaseSettings):
