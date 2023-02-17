@@ -9,6 +9,7 @@ from tqdm import tqdm
 import pandas as pd
 from schemas.exhauster import ExhausterEvent
 from service.mapping_service import MappingService
+from shared.base import logger
 
 
 @dataclass
@@ -21,6 +22,8 @@ class StreamService:
                 created_at=record.get("moment"), exhauster_id=idx
             )
             self.mapping_service.map_signals(exhauster_event, record)
+            # print(record)
+            # print(exhauster_event.dict())
 
     def store_records_localy(self, record: Dict[str, Any]) -> None:
         events = []
@@ -31,14 +34,22 @@ class StreamService:
             self.mapping_service.map_signals(exhauster_event, record)
             events.append(exhauster_event.dict())
 
-        pd.json_normalize(events).to_csv(f"data/kafka_records/{uuid.uuid4()}.csv")
+        folder = Path("data/kafka_records")
+        folder.mkdir(exist_ok=True)
+
+        pd.json_normalize(events).to_csv(folder / f"{uuid.uuid4()}.csv")
 
     def concat_local_records(self) -> None:
         df = pd.DataFrame()
         for file in tqdm(Path("data/kafka_records/").iterdir()):
             if file.name == ".gitkeep":
                 continue
+            try:
+                df = pd.concat([df, pd.read_csv(file)])
+            except Exception:
+                logger.exception("concat.error")
 
-            df = pd.concat([df, pd.read_csv(file)])
+        folder = Path("data/kafka_records_concat")
+        folder.mkdir(exist_ok=True)
 
-        df.to_csv(f"data/kafka_records_concat/{datetime.utcnow().isoformat()}.csv")
+        df.to_csv(folder / f"{datetime.utcnow().isoformat()}.csv")

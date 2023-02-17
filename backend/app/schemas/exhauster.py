@@ -37,8 +37,8 @@ class GasCollectorValue(BaseModel):
 
 
 class GateValveValue(BaseModel):
-    gas_valve_closed: Optional[float] = None
-    gas_valve_open: Optional[float] = None
+    gas_valve_closed: Optional[bool] = None
+    gas_valve_open: Optional[bool] = None
     gas_valve_position: Optional[float] = None
 
 
@@ -55,7 +55,7 @@ class OilValue(BaseModel):
 
 
 class WorkValue(BaseModel):
-    is_working: Optional[int] = None
+    is_working: Optional[bool] = None
 
 
 class ExhausterEvent(BaseModel):

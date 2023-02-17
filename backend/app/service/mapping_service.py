@@ -42,6 +42,14 @@ class MappingService:
     ) -> Optional[float]:
         return record.get(self.exhauster_row_to_signal_id[(exhauster_id, row)])
 
+    def _get_bool_value(
+        self, record: Dict[str, Any], exhauster_id: int, row: int
+    ) -> Optional[bool]:
+        value = record.get(self.exhauster_row_to_signal_id[(exhauster_id, row)])
+        if value is None:
+            return None
+        return bool(int(value))
+
     def _get_alarmable_value(
         self,
         record: Dict[str, Any],
@@ -138,8 +146,8 @@ class MappingService:
         )
 
         exhauster_event.gate_valve = GateValveValue(
-            gas_valve_closed=self._get_value(record, exhauster_id, 111),
-            gas_valve_open=self._get_value(record, exhauster_id, 112),
+            gas_valve_closed=self._get_bool_value(record, exhauster_id, 111),
+            gas_valve_open=self._get_bool_value(record, exhauster_id, 112),
             gas_valve_position=self._get_value(record, exhauster_id, 113),
         )
 
@@ -156,5 +164,5 @@ class MappingService:
         )
 
         exhauster_event.work = WorkValue(
-            is_working=self._get_value(record, exhauster_id, 120)
+            is_working=self._get_bool_value(record, exhauster_id, 120)
         )
