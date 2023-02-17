@@ -1,4 +1,5 @@
 *.code-workspace
+**/CA.pem
 
 ### SAM BUILD ###
 **/.aws-sam
