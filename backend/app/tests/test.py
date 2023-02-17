@@ -1,3 +1,0 @@
-class TestClass:
-    def test_listen_kafka():
-        ...
