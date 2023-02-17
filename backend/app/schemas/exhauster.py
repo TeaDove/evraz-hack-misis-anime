@@ -13,17 +13,17 @@ class AlarmableValue(BaseModel):
 
 
 class BearingVibration(BaseModel):
-    vibration_axial: AlarmableValue
-    vibration_horizontal: AlarmableValue
-    vibration_vertical: AlarmableValue
+    vibration_axial: AlarmableValue = AlarmableValue()
+    vibration_horizontal: AlarmableValue = AlarmableValue()
+    vibration_vertical: AlarmableValue = AlarmableValue()
 
 
 class Bearing(BaseModel):
-    temperature: AlarmableValue
+    temperature: AlarmableValue = AlarmableValue()
 
 
 class VibrationalBearing(Bearing):
-    vibration: BearingVibration
+    vibration: BearingVibration = BearingVibration()
 
 
 class TemperatureValue(BaseModel):
@@ -55,30 +55,30 @@ class OilValue(BaseModel):
 
 
 class WorkValue(BaseModel):
-    is_working: Optional[float] = None
+    is_working: Optional[int] = None
 
 
 class ExhausterEvent(BaseModel):
-    create_at: datetime
+    created_at: Optional[datetime] = None
 
-    exhauster_id: Optional[float] = None
+    exhauster_id: int
 
-    bearing_1: VibrationalBearing
-    bearing_2: VibrationalBearing
-    bearing_3: Bearing
-    bearing_4: Bearing
-    bearing_5: Bearing
-    bearing_6: Bearing
-    bearing_7: VibrationalBearing
-    bearing_8: VibrationalBearing
-    bearing_9: Bearing
-    cooler_water: TemperatureValue
-    cooler_oil: TemperatureValue
-    gas_collector: GasCollectorValue
-    gate_valve: GateValveValue
-    drive: DriveValue
-    oil: OilValue
-    work: WorkValue
+    bearing_1: VibrationalBearing = VibrationalBearing()
+    bearing_2: VibrationalBearing = VibrationalBearing()
+    bearing_3: Bearing = Bearing()
+    bearing_4: Bearing = Bearing()
+    bearing_5: Bearing = Bearing()
+    bearing_6: Bearing = Bearing()
+    bearing_7: VibrationalBearing = VibrationalBearing()
+    bearing_8: VibrationalBearing = VibrationalBearing()
+    bearing_9: Bearing = Bearing()
+    cooler_water: TemperatureValue = TemperatureValue()
+    cooler_oil: TemperatureValue = TemperatureValue()
+    gas_collector: GasCollectorValue = GasCollectorValue()
+    gate_valve: GateValveValue = GateValveValue()
+    drive: DriveValue = DriveValue()
+    oil: OilValue = OilValue()
+    work: WorkValue = WorkValue()
 
     # {
     #     "created_at": 1,
