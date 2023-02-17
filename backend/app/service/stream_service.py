@@ -37,7 +37,7 @@ class StreamService:
         folder = Path("data/kafka_records")
         folder.mkdir(exist_ok=True)
 
-        pd.json_normalize(events).to_csv(folder / f"{uuid.uuid4()}.csv")
+        pd.json_normalize(events).to_parquet(folder / f"{uuid.uuid4()}.pqt")
 
     def concat_local_records(self) -> None:
         df = pd.DataFrame()
@@ -45,11 +45,11 @@ class StreamService:
             if file.name == ".gitkeep":
                 continue
             try:
-                df = pd.concat([df, pd.read_csv(file)])
+                df = pd.concat([df, pd.read_parquet(file)])
             except Exception:
                 logger.exception("concat.error")
 
         folder = Path("data/kafka_records_concat")
         folder.mkdir(exist_ok=True)
 
-        df.to_csv(folder / f"{datetime.utcnow().isoformat()}.csv")
+        df.to_parquet(folder / f"{datetime.utcnow().strftime('%Y-%m-%dT%H:%M')}.pqt")
