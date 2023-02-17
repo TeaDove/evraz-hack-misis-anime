@@ -19,7 +19,7 @@ from schemas.exhauster import (
 
 @dataclass
 class MappingService:
-    exhauster_count: int = 1
+    exhauster_count: int = 6
 
     def __post_init__(self):
         mappings: Tuple[pd.DataFrame, ...] = (

@@ -79,12 +79,3 @@ class ExhausterEvent(BaseModel):
     drive: DriveValue = DriveValue()
     oil: OilValue = OilValue()
     work: WorkValue = WorkValue()
-
-    # {
-    #     "created_at": 1,
-    #     "exhauster_id": 1,
-    #     "bearing_1_vibration_vibration_axial_value": 111,
-    #     "bearing_1_vibration_vibration_axial_alarm_max": 111,
-    # }
-    # def export(self):
-    #     for field in self.__fields__:

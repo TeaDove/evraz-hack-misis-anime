@@ -1,5 +1,7 @@
 *.code-workspace
 **/CA.pem
+backend/app/data/kafka_records
+backend/app/data/kafka_records_concat
 
 ### SAM BUILD ###
 **/.aws-sam

@@ -48,3 +48,11 @@ def listen_kafka() -> None:
     for idx, record in enumerate(consumer):
         logger.debug(f"start.processing.record.{idx}")
         executor.submit(_process_record_safe, record)
+
+
+def listen_kafka_store_localy() -> None:
+    consumer = _set_consumer()
+
+    for idx, record in enumerate(consumer):
+        logger.debug(f"start.processing.record.{idx}")
+        container.stream_service.store_records_localy(orjson.loads(record.value))
