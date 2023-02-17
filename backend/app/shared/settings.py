@@ -9,6 +9,11 @@ class AppSettings(BaseSettings):
     kafka_ca_pem_path: str = "CA.pem"
     kafka_consumer_group: str = "misisAnimeBoys"
 
+    mongo_host: str
+    mongo_port: int
+    mongo_username: str
+    mongo_password: str
+
     class Config:
         env_prefix = "misis_"
         env_file = ".env"

@@ -7,6 +7,7 @@ from typing import Any, Dict
 from tqdm import tqdm
 
 import pandas as pd
+from repository.mongo_repository import MongoRepository
 from schemas.exhauster import ExhausterEvent
 from service.mapping_service import MappingService
 from shared.base import logger
@@ -15,6 +16,7 @@ from shared.base import logger
 @dataclass
 class StreamService:
     mapping_service: MappingService
+    mongo_repository: MongoRepository
 
     def process_record(self, record: Dict[str, Any]) -> None:
         for idx in range(self.mapping_service.exhauster_count):
@@ -22,8 +24,7 @@ class StreamService:
                 created_at=record.get("moment"), exhauster_id=idx
             )
             self.mapping_service.map_signals(exhauster_event, record)
-            # print(record)
-            # print(exhauster_event.dict())
+            self.mongo_repository.insert_event(exhauster_event)
 
     def store_records_localy(self, record: Dict[str, Any]) -> None:
         events = []

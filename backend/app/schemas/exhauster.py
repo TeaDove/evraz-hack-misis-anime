@@ -1,6 +1,7 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, Optional
 
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
 
@@ -79,3 +80,6 @@ class ExhausterEvent(BaseModel):
     drive: DriveValue = DriveValue()
     oil: OilValue = OilValue()
     work: WorkValue = WorkValue()
+
+    def jsonable_dict(self) -> Dict[str, Any]:
+        return jsonable_encoder(self)

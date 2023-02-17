@@ -48,8 +48,6 @@ def listen_kafka() -> None:
     for idx, record in enumerate(consumer):
         logger.debug(f"start.processing.record.{idx}")
         executor.submit(_process_record_safe, record)
-        if idx > 1:
-            break
 
 
 def listen_kafka_store_localy() -> None:
