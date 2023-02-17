@@ -1,14 +1,15 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
 
 class AlarmableValue(BaseModel):
-    value: float
-    alarm_max: float
-    alarm_min: float
-    warning_max: float
-    warning_min: float
+    value: Optional[float] = None
+    alarm_max: Optional[float] = None
+    alarm_min: Optional[float] = None
+    warning_max: Optional[float] = None
+    warning_min: Optional[float] = None
 
 
 class BearingVibration(BaseModel):
@@ -26,41 +27,41 @@ class VibrationalBearing(Bearing):
 
 
 class TemperatureValue(BaseModel):
-    temperature_after: float
-    temperature_before: float
+    temperature_after: Optional[float] = None
+    temperature_before: Optional[float] = None
 
 
 class GasCollectorValue(BaseModel):
-    temperature_before: float
-    underpressure_before: float
+    temperature_before: Optional[float] = None
+    underpressure_before: Optional[float] = None
 
 
 class GateValveValue(BaseModel):
-    gas_valve_closed: float
-    gas_valve_open: float
-    gas_valve_position: float
+    gas_valve_closed: Optional[float] = None
+    gas_valve_open: Optional[float] = None
+    gas_valve_position: Optional[float] = None
 
 
 class DriveValue(BaseModel):
-    rotor_current: float
-    rotor_voltage: float
-    stator_current: float
-    stator_voltage: float
+    rotor_current: Optional[float] = None
+    rotor_voltage: Optional[float] = None
+    stator_current: Optional[float] = None
+    stator_voltage: Optional[float] = None
 
 
 class OilValue(BaseModel):
-    oil_level: float
-    oil_pressure: float
+    oil_level: Optional[float] = None
+    oil_pressure: Optional[float] = None
 
 
 class WorkValue(BaseModel):
-    is_working: bool
+    is_working: Optional[float] = None
 
 
 class ExhausterEvent(BaseModel):
     create_at: datetime
 
-    exhauster_id: int
+    exhauster_id: Optional[float] = None
 
     bearing_1: VibrationalBearing
     bearing_2: VibrationalBearing
@@ -78,3 +79,12 @@ class ExhausterEvent(BaseModel):
     drive: DriveValue
     oil: OilValue
     work: WorkValue
+
+    # {
+    #     "created_at": 1,
+    #     "exhauster_id": 1,
+    #     "bearing_1_vibration_vibration_axial_value": 111,
+    #     "bearing_1_vibration_vibration_axial_alarm_max": 111,
+    # }
+    # def export(self):
+    #     for field in self.__fields__:

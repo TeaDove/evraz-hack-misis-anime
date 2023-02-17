@@ -12,6 +12,8 @@ loguru = "^0.6.0"
 pydantic = {extras = ["dotenv"], version = "^1.10.5"}
 fastapi = "^0.92.0"
 uvicorn = "^0.20.0"
+pandas = "^1.5.3"
+openpyxl = "^3.1.1"
 
 
 [build-system]
