@@ -3,7 +3,7 @@ from shared.settings import app_settings
 
 
 def listen_kafka() -> None:
-    consumer = KafkaConsumer(
+    KafkaConsumer(
         bootstrap_servers=app_settings.kafka_host,
         security_protocol="SASL_SSL",
         sasl_mechanism="SCRAM-SHA-512",
@@ -13,4 +13,3 @@ def listen_kafka() -> None:
         sasl_plain_password=app_settings.kafka_password,
         ssl_cafile=app_settings.kafka_ca_pem_path,
     )
-    return consumer
