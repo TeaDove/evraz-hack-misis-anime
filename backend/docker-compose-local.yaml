@@ -12,6 +12,7 @@ services:
       - 27017:27017
     volumes:
       - './app/data/mongo_data:/data/db'
+      - './extra/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
     networks:
       - backend
     healthcheck:

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="N3TPZUQrlmw5FUeRnDQk" name="Page-1">
-        <mxGraphModel dx="741" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="834" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -48,7 +48,7 @@
                     <mxGeometry x="79.99999999999994" y="208.25" width="67.68" height="55.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="Графана" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/other/Grafana.svg;" parent="18" vertex="1">
-                    <mxGeometry x="130" y="367.6" width="68" height="52.800000000000004" as="geometry"/>
+                    <mxGeometry x="74" y="367.6" width="68" height="52.800000000000004" as="geometry"/>
                 </mxCell>
                 <mxCell id="4" value="parquet" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.users.csv_file;" parent="18" vertex="1">
                     <mxGeometry x="380" y="214.5" width="59" height="43" as="geometry"/>
@@ -76,7 +76,7 @@
                         <mxPoint x="226.99999999999977" y="107.00000000000011" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="30" value="Сохранение ивентов&lt;br&gt;Обновление &lt;br&gt;статуса эксгаустеров" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="8">
+                <mxCell id="30" value="Сохранение ивентов&lt;br&gt;Обновление &lt;br&gt;статуса эксгаустеров" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="8" vertex="1" connectable="0">
                     <mxGeometry x="0.0627" y="2" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
