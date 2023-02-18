@@ -3,14 +3,19 @@ import {Header, StatusBadge} from "../components"
 import {fetchExhausters} from "../common"
 import {Button, Table, Tooltip} from "@nextui-org/react"
 import moment from "moment"
-import {MdReadMore} from "react-icons/all"
+import {useAsyncList} from "@nextui-org/react"
+import {useNavigate} from "react-router-dom"
 
 
 const MainPage = () => {
   const [exhaustersData, setExhaustersData] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchExhausters().then(data => {
+      setLoading(false)
       setExhaustersData(data)
     })
   }, [])
@@ -32,7 +37,7 @@ const MainPage = () => {
       if (date) {
         return moment(date).fromNow()
       } else {
-        return "---"
+        return "н/д"
       }
     }
 
@@ -45,8 +50,6 @@ const MainPage = () => {
         <Table.Cell>
           <StatusBadge color="positive">ОК</StatusBadge>
         </Table.Cell>
-        <Table.Cell>
-        </Table.Cell>
       </Table.Row>
     )
   }
@@ -54,7 +57,11 @@ const MainPage = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:bg-secondary-dark rounded-3xl">
       <Header title="Информация" category="Эксгаустеры" />
-      <Table selectionMode="single" selectionBehavior="replace">
+      <Table
+        selectionMode="single"
+        selectionBehavior="replace"
+        onSelectionChange={e => navigate(`/exhauster/${e.currentKey}`)}
+      >
         <Table.Header>
           <Table.Column key="name">
             ЭКСГАУСТЕР
@@ -71,20 +78,15 @@ const MainPage = () => {
           <Table.Column key="status">
             СТАТУС
           </Table.Column>
-          <Table.Column
-            hideHeader
-            align="center"
-          />
         </Table.Header>
-        <Table.Body items={exhaustersData}>
+        <Table.Body items={exhaustersData} loadingState={loading ? "loading" : "idle"}>
           {renderRow}
         </Table.Body>
         <Table.Pagination
           shadow
-          noMargin
           align="center"
           rowsPerPage={10}
-          onPageChange={(page) => console.log({ page })}
+          onPageChange={(page) => {}}
         />
       </Table>
     </div>

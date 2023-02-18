@@ -3,8 +3,8 @@ import {Link, NavLink} from "react-router-dom"
 import {RiDashboardFill, GrFanOption} from "react-icons/all.js"
 
 const Sidebar = () => {
-  const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2';
-  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
+  const activeLink = 'font-semibold flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-blue-600';
+  const normalLink = 'font-semibold flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
   return (
     <div className="m-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -20,9 +20,6 @@ const Sidebar = () => {
           </p>
             <NavLink
               to={`/`}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? "blue" : '',
-              })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <span className="capitalize ">Информация</span>
