@@ -26,3 +26,11 @@
 В случае нагрузки, поставляемой 100 пользователей, средний ответ составляет 1.4c, при нагрузке 50 запросов в секунду.
 ![loadtest_1](./loadtests_1.png)
 ![loadtest_2](./loadtests_2.png)
+
+
+### Запуск
+- backend:
+```
+cd backend
+docker-compose up
+```
