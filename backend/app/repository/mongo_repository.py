@@ -48,7 +48,7 @@ class MongoRepository:
                 )
             )
         except DuplicateKeyError:
-            logger.warning(f"duplicated.key.{event.created_at}")
+            logger.warning("duplicated.key.{}", event.created_at)
 
     def get_events_by_exhauster(
         self, exhauster_id: int, sort_order: SortOrders, page: int, size: int
