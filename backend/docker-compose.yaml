@@ -22,41 +22,6 @@ services:
       retries: 5
       start_period: 40s
 
-  db:
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_DATABASE: chartbrew
-      MYSQL_USER: chartbrew
-      MYSQL_PASSWORD: chartbrew
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
-    ports:
-      - 3306:3306
-    volumes:
-      - ./app/data/cb-db/:/var/lib/mysql
-    networks:
-      - backend
-
-  chartbrew:
-    image: razvanilin/chartbrew:latest-arm64
-    restart: always
-    ports:
-      - 4018:4018
-      - 4019:4019
-    environment:
-      CB_DB_HOST: "db:3306"
-      CB_DB_NAME: chartbrew
-      CB_DB_USERNAME: chartbrew
-      CB_DB_PASSWORD: chartbrew
-      REACT_APP_CLIENT_HOST: "http://0.0.0.0:4018"
-    expose:
-      - 4018
-      - 4019
-    depends_on:
-      - mongo
-    networks:
-      - backend
-
   backend_web:
     restart: always
     environment:
