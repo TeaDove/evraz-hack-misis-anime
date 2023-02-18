@@ -1,4 +1,4 @@
-CREATE DATABASE db_evraz;
+-- CREATE DATABASE db_evraz;
 
 GRANT ALL PRIVILEGES ON DATABASE db_evraz TO db_evraz;
 
@@ -6,8 +6,7 @@ GRANT ALL PRIVILEGES ON DATABASE db_evraz TO db_evraz;
 
 CREATE SCHEMA public;
 
-create table public.event
-(
+create table public.event(
     id           bigserial
         constraint event_pk
             primary key,
