@@ -18,6 +18,12 @@ class AppSettings(BaseSettings):
     mongo_username: str = "root"
     mongo_password: str = "root"
 
+    pg_database: str = "db_evraz"
+    pg_host: str = "localhost"
+    pg_port: int = 5432
+    pg_username: str = "db_evraz"
+    pg_password: str = "db_evraz"
+
     uvicorn_host: str = "localhost"
     uvicorn_port: int = 8000
     uvicorn_workers: int = mp.cpu_count() * 2
