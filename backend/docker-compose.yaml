@@ -27,8 +27,8 @@ services:
     networks:
       - backend
     environment:
-      - "GF_SECURITY_ADMIN_USER=root"
-      - "GF_SECURITY_ADMIN_PASSWORD=root"
+      - "GF_SECURITY_ADMIN_USER=admin"
+      - "GF_SECURITY_ADMIN_PASSWORD=admin"
     depends_on:
       - mongo
     ports:
