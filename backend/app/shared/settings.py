@@ -1,4 +1,5 @@
 import multiprocessing as mp
+from typing import Optional
 
 from pydantic import BaseSettings
 
@@ -10,7 +11,8 @@ class AppSettings(BaseSettings):
     kafka_password: str
     kafka_ca_pem_path: str = "CA.pem"
     kafka_consumer_group: str = "misisAnimeBoys"
-    kafka_read_from_start: bool = True
+    kafka_read_from_start: bool = False
+    kafka_minus_offset: Optional[int] = None
 
     mongo_database: str = "evraz"
     mongo_host: str = "localhost"

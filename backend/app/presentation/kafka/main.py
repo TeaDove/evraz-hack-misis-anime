@@ -39,8 +39,15 @@ def _set_consumer() -> KafkaConsumer:
     consumer.assign(topic_partitions)
     if app_settings.kafka_read_from_start:
         consumer.seek_to_beginning(*topic_partitions)
-    else:  # TODO fix seek to end
+    else:
         consumer.seek_to_end(*topic_partitions)
+        if app_settings.kafka_minus_offset:
+            for partition in topic_partitions:
+                current = consumer.position(partition)
+                new_offset = current - app_settings.kafka_minus_offset
+                consumer.seek(partition, new_offset)
+                logger.info("setting.offset.{}", new_offset)
+
     return consumer
 
 
