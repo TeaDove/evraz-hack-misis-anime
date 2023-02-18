@@ -20,15 +20,9 @@ class SortOrders(str, enum.Enum):
 
 @dataclass
 class MongoRepository:
-    def __post_init__(self):
-        self.client = MongoClient(
-            host=app_settings.mongo_host,
-            port=app_settings.mongo_port,
-            username=app_settings.mongo_username,
-            password=app_settings.mongo_password,
-        )
-        self.database = self.client.get_database("test")
+    def _db_init(self):
         if (collection_event := self.database.get_collection("event")) is None:
+            logger.warning("collection_event.not.found.creating.it")
             collection_event = self.database.create_collection("event")
             collection_event.create_index("exhauster_id")
             collection_event.create_index(
@@ -37,10 +31,21 @@ class MongoRepository:
 
         self.collection_event = collection_event
         if (collection_exhauster := self.database.get_collection("exhauster")) is None:
+            logger.warning("collection_exhauster.not.found.creating.it")
             collection_exhauster = self.database.create_collection("exhauster")
             collection_exhauster.create_index("exhauster_id", unique=True)
 
         self.collection_exhauster = collection_exhauster
+
+    def __post_init__(self):
+        self.client = MongoClient(
+            host=app_settings.mongo_host,
+            port=app_settings.mongo_port,
+            username=app_settings.mongo_username,
+            password=app_settings.mongo_password,
+        )
+        self.database = self.client.get_database("test")
+        self._db_init()
 
     def get_all_events(self) -> Iterable[ExhausterEvent]:
         curs = self.collection_event.find()
@@ -84,6 +89,7 @@ class MongoRepository:
     def create_exhauster(self, exhauster: Exhauster) -> None:
         try:
             self.collection_exhauster.insert_one(document=exhauster.jsonable_dict())
+            logger.info("exhauster.created.{}", exhauster.exhauster_id)
         except DuplicateKeyError:
             logger.exception("duplicated.key", exc_info=True)
 

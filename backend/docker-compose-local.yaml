@@ -49,6 +49,7 @@ services:
       - backend
     depends_on:
       - mongo
+      - backend_kafka_processor
     ports:
       - 8000:8000
 
