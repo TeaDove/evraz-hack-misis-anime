@@ -29,6 +29,8 @@ services:
     environment:
       - "GF_SECURITY_ADMIN_USER=admin"
       - "GF_SECURITY_ADMIN_PASSWORD=coh&ja3teaJohmoh9jain4afaiT3iF"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_SERVER_DOMAIN=0.0.0.0"
     depends_on:
       - mongo
     ports:
