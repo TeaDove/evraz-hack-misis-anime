@@ -1,7 +1,7 @@
 *.code-workspace
 **/CA.pem
 backend/app/data/mongo_data
-!backend/app/data/mongo_data/.gitkeep
+backend/app/data/grafana
 backend/app/data/kafka_records
 backend/app/data/kafka_records_concat
 

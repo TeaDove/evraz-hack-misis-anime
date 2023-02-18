@@ -1,7 +1,6 @@
 version: '3.1'
 
 services:
-
   mongo:
     image: mongo:6.0.4
     restart: always
@@ -22,6 +21,22 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+
+  grafana:
+    image: grafana/grafana:7.5.7
+    networks:
+      - backend
+    environment:
+      - "GF_SECURITY_ADMIN_USER=root"
+      - "GF_SECURITY_ADMIN_PASSWORD=root"
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./app/data/grafana/grafana-data:/var/lib/grafana
 
   backend_web:
     restart: always
