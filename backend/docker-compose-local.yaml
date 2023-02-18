@@ -32,6 +32,7 @@ services:
       MISIS_KAFKA_USER: "9433_reader"
       MISIS_KAFKA_PASSWORD: "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
       MISIS_KAFKA_READ_FROM_START: "false"
+      MISIS_MONGO_DATABASE: "evraz"
       MISIS_MONGO_HOST: "mongo"
       MISIS_MONGO_PORT: 27017
       MISIS_MONGO_USERNAME: "root"

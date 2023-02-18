@@ -27,7 +27,7 @@ class MongoRepository:
             username=app_settings.mongo_username,
             password=app_settings.mongo_password,
         )
-        self.database = self.client.get_database("evraz")
+        self.database = self.client.get_database(app_settings.mongo_database)
         self.collection_event = self.database.get_collection("event")
         self.collection_exhauster = self.database.get_collection("exhauster")
 

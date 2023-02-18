@@ -12,10 +12,11 @@ class AppSettings(BaseSettings):
     kafka_consumer_group: str = "misisAnimeBoys"
     kafka_read_from_start: bool = True
 
-    mongo_host: str
-    mongo_port: int
-    mongo_username: str
-    mongo_password: str
+    mongo_database: str = "evraz"
+    mongo_host: str = "localhost"
+    mongo_port: int = 27017
+    mongo_username: str = "root"
+    mongo_password: str = "root"
 
     uvicorn_host: str = "localhost"
     uvicorn_port: int = 8000
