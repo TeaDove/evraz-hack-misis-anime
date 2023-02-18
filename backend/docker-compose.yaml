@@ -28,7 +28,7 @@ services:
       - backend
     environment:
       - "GF_SECURITY_ADMIN_USER=admin"
-      - "GF_SECURITY_ADMIN_PASSWORD=admin"
+      - "GF_SECURITY_ADMIN_PASSWORD=coh&ja3teaJohmoh9jain4afaiT3iF"
     depends_on:
       - mongo
     ports:
