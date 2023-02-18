@@ -4,6 +4,7 @@ from typing import Iterable, List
 from repository.mongo_repository import MongoRepository, SortOrders
 from schemas.event import ExhausterEvent
 from schemas.exhauster import Exhauster
+from shared.base import logger
 
 
 @dataclass
@@ -54,6 +55,17 @@ class ExhausterService:
     def get_exhausters(self) -> Iterable[Exhauster]:
         return self.mongo_repository.get_exhausters()
 
-    def update_exhauster(self, event: ExhausterEvent):
+    def update_exhauster(self, event: ExhausterEvent) -> None:
         exhauster = self.mongo_repository.get_exhauster(event.exhauster_id)
-        print(exhauster)  # noqa: T201
+
+        if exhauster is None:
+            logger.critical("exhauster.not.found")
+            return
+
+        if exhauster.status.work.is_working != event.status.work.is_working:
+            exhauster.last_replacement = event.created_at
+
+        exhauster.status = event.status
+        exhauster.last_update = event.created_at
+
+        self.mongo_repository.update_exhauster(exhauster=exhauster)

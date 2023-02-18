@@ -90,3 +90,8 @@ class MongoRepository:
             return None
 
         return Exhauster.parse_obj(document)
+
+    def update_exhauster(self, exhauster: Exhauster) -> None:
+        self.collection_exhauster.find_one_and_replace(
+            {"exhauster_id": exhauster.exhauster_id}, exhauster.jsonable_dict()
+        )
