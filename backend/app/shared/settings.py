@@ -1,3 +1,5 @@
+import multiprocessing as mp
+
 from pydantic import BaseSettings
 
 
@@ -17,7 +19,8 @@ class AppSettings(BaseSettings):
 
     uvicorn_host: str = "localhost"
     uvicorn_port: int = 8000
-    uvicorn_workers: int = 8
+    uvicorn_workers: int = mp.cpu_count() * 2
+    uvicorn_log_level: str = "WARNING"
 
     class Config:
         env_prefix = "misis_"

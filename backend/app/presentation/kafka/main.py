@@ -39,15 +39,18 @@ def _set_consumer() -> KafkaConsumer:
     consumer.assign(topic_partitions)
     if app_settings.kafka_read_from_start:
         consumer.seek_to_beginning(*topic_partitions)
+    else:  # TODO fix seek to end
+        consumer.seek_to_end(*topic_partitions)
     return consumer
 
 
 def listen_kafka() -> None:
+    logger.info("start.processing.records")
     consumer = _set_consumer()
     executor = ThreadPoolExecutor()
 
     for idx, record in enumerate(consumer):
-        logger.debug(f"start.processing.record.{idx}")
+        logger.info("start.processing.record.{}", idx)
         executor.submit(_process_record_safe, record)
 
 
