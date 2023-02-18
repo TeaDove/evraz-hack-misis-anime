@@ -63,16 +63,3 @@ repos:
                   "--remove-unused-variables",
                   "--ignore-init-module-imports",
               ]
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.72.1
-    hooks:
-      - id: terragrunt_fmt  # formates terragrunt
-      - id: terraform_fmt  # formates terraform
-
-#  - repo: local
-#    hooks:
-#      - id: run-pytest
-#        name: run-pytest
-#        entry: ./tests/run_tests.py
-#        language: script
-#        pass_filenames: false

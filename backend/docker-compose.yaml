@@ -11,4 +11,14 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./data/mongo_data:./data
+      - './app/data/mongo_data:/data/db'
+
+  backend_web:
+    build:
+      context: .
+      dockerfile: DockerfileWeb
+
+  backend_kafka_processor:
+    build:
+      context: .
+      dockerfile: DockerfileKafka

@@ -8,11 +8,14 @@ class AppSettings(BaseSettings):
     kafka_password: str
     kafka_ca_pem_path: str = "CA.pem"
     kafka_consumer_group: str = "misisAnimeBoys"
+    kafka_read_from_start: bool = True
 
     mongo_host: str
     mongo_port: int
     mongo_username: str
     mongo_password: str
+
+    uvicorn_workers: int = 8
 
     class Config:
         env_prefix = "misis_"
