@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 from repository.mongo_repository import MongoRepository, SortOrders
 from schemas.event import ExhausterEvent
@@ -51,6 +51,9 @@ class ExhausterService:
         return self.mongo_repository.get_events_by_exhauster(
             exhauster_id=exhauster_id, sort_order=sort_order, page=page, size=size
         )
+
+    def get_exhauster(self, exhauster_id: int) -> Optional[Exhauster]:
+        return self.mongo_repository.get_exhauster(exhauster_id)
 
     def get_exhausters(self) -> Iterable[Exhauster]:
         return self.mongo_repository.get_exhausters()

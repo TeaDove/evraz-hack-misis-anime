@@ -1,8 +1,12 @@
-from fastapi import APIRouter, Query, status
+from fastapi import APIRouter, Path, Query, status
 from fastapi.exceptions import HTTPException
 
 from presentation.dependencies import container
-from presentation.schemas import ExhausterEventsResponse, ExhaustersResponse
+from presentation.schemas import (
+    ExhausterEventsResponse,
+    ExhausterResponse,
+    ExhaustersResponse,
+)
 from repository.mongo_repository import SortOrders
 
 router = APIRouter(prefix="")
@@ -36,3 +40,15 @@ async def get_exhauster_events(
 async def get_exhausters():
     result = container.exhauster_service.get_exhausters()
     return ExhaustersResponse(exhausters=list(result))
+
+
+@router.get("/exhauster/{exhauster_id}", response_model=ExhausterResponse)
+async def get_exhauster(exhauster_id: int = Path(..., example=1)):
+    result = container.exhauster_service.get_exhauster(exhauster_id=exhauster_id)
+
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="exhauster not found"
+        )
+
+    return ExhausterResponse(exhauster=result)

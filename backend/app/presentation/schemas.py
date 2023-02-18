@@ -12,3 +12,7 @@ class ExhausterEventsResponse(BaseModel):
 
 class ExhaustersResponse(BaseModel):
     exhausters: List[Exhauster]
+
+
+class ExhausterResponse(BaseModel):
+    exhauster: Exhauster
