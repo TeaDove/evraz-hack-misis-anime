@@ -5,6 +5,7 @@ import pandas as pd
 from schemas.event import ExhausterEvent
 from schemas.status import (
     AlarmableValue,
+    AlarmStatuses,
     Bearing,
     BearingVibration,
     DriveValue,
@@ -50,18 +51,37 @@ class MappingService:
             return None
         return bool(int(value))
 
-    def _get_alarmable_value(
+    def _get_alarmable_value(  # noqa: CCR001
         self,
         record: Dict[str, Any],
         exhauster_id: int,
         start_row: int,
     ) -> AlarmableValue:
+        value = self._get_value(record, exhauster_id, start_row)
+        alarm_max = self._get_value(record, exhauster_id, start_row + 1)
+        alarm_min = self._get_value(record, exhauster_id, start_row + 2)
+        warning_max = self._get_value(record, exhauster_id, start_row + 3)
+        warning_min = self._get_value(record, exhauster_id, start_row + 4)
+        if value is None:
+            status = AlarmStatuses.UNKNOWN
+        elif (alarm_min is not None and value < alarm_min) or (
+            alarm_max is not None and value > alarm_max
+        ):
+            status = AlarmStatuses.ALARM
+        elif (warning_min is not None and value < warning_min) or (
+            warning_max is not None and value > warning_max
+        ):
+            status = AlarmStatuses.WARNING
+        else:
+            status = AlarmStatuses.OK
+
         return AlarmableValue(
-            value=self._get_value(record, exhauster_id, start_row),
-            alarm_max=self._get_value(record, exhauster_id, start_row + 1),
-            alarm_min=self._get_value(record, exhauster_id, start_row + 2),
-            warning_max=self._get_value(record, exhauster_id, start_row + 3),
-            warning_min=self._get_value(record, exhauster_id, start_row + 4),
+            value=value,
+            alarm_max=alarm_max,
+            alarm_min=alarm_min,
+            warning_max=warning_max,
+            warning_min=warning_min,
+            status=status,
         )
 
     def _get_bearing(

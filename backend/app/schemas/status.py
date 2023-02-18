@@ -1,6 +1,14 @@
+import enum
 from typing import Optional
 
 from pydantic import BaseModel
+
+
+class AlarmStatuses(str, enum.Enum):
+    OK = "OK"
+    WARNING = "WARNING"
+    ALARM = "ALARM"
+    UNKNOWN = "UNKNOWN"
 
 
 class AlarmableValue(BaseModel):
@@ -9,6 +17,7 @@ class AlarmableValue(BaseModel):
     alarm_min: Optional[float] = None
     warning_max: Optional[float] = None
     warning_min: Optional[float] = None
+    status: AlarmStatuses = AlarmStatuses.UNKNOWN
 
 
 class BearingVibration(BaseModel):
