@@ -38,6 +38,7 @@ services:
       MISIS_MONGO_PASSWORD: "root"
       MISIS_UVICORN_HOST: "0.0.0.0"
       MISIS_UVICORN_PORT: 8000
+      MISIS_PG_HOST: "postgres"
     build:
       context: .
       dockerfile: DockerfileWeb

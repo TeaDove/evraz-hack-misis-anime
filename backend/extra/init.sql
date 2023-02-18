@@ -4,9 +4,9 @@ GRANT ALL PRIVILEGES ON DATABASE db_evraz TO db_evraz;
 
 \c db_evraz;
 
-CREATE SCHEMA if not exists public;
+CREATE SCHEMA IF NOT EXISTS public;
 
-create table public.event(
+CREATE TABLE public.event(
     id           bigserial
         constraint event_pk
             primary key,
@@ -15,4 +15,4 @@ create table public.event(
     status       jsonb                    not null
 );
 
-create unique index on public.event (exhauster_id, created_at);
+CREATE UNIQUE INDEX on public.event (exhauster_id, created_at);
