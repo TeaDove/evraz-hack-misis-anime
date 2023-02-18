@@ -36,13 +36,13 @@ async def get_exhauster_events(
     return ExhausterEventsResponse(events=list(result))
 
 
-@router.get("/exhauster", response_model=ExhaustersResponse)
+@router.get("/exhausters", response_model=ExhaustersResponse)
 async def get_exhausters():
     result = container.exhauster_service.get_exhausters()
     return ExhaustersResponse(exhausters=list(result))
 
 
-@router.get("/exhauster/{exhauster_id}", response_model=ExhausterResponse)
+@router.get("/exhausters/{exhauster_id}", response_model=ExhausterResponse)
 async def get_exhauster(exhauster_id: int = Path(..., example=1)):
     result = container.exhauster_service.get_exhauster(exhauster_id=exhauster_id)
 
