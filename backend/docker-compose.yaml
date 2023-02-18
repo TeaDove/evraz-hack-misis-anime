@@ -22,25 +22,40 @@ services:
       retries: 5
       start_period: 40s
 
-  grafana:
-    build:
-      context: .
-      dockerfile: DockerfileGrafana
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: chartbrew
+      MYSQL_USER: chartbrew
+      MYSQL_PASSWORD: chartbrew
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - 3306:3306
+    volumes:
+      - ./app/data/cb-db/:/var/lib/mysql
     networks:
       - backend
+
+  chartbrew:
+    image: razvanilin/chartbrew:latest-arm64
+    restart: always
+    ports:
+      - 4018:4018
+      - 4019:4019
     environment:
-      - "GF_SECURITY_ADMIN_USER=admin"
-      - "GF_SECURITY_ADMIN_PASSWORD=coh&ja3teaJohmoh9jain4afaiT3iF"
-      - "GF_USERS_ALLOW_SIGN_UP=false"
-      - "GF_SERVER_DOMAIN=0.0.0.0"
+      CB_DB_HOST: "db:3306"
+      CB_DB_NAME: chartbrew
+      CB_DB_USERNAME: chartbrew
+      CB_DB_PASSWORD: chartbrew
+      REACT_APP_CLIENT_HOST: "http://0.0.0.0:4018"
+    expose:
+      - 4018
+      - 4019
     depends_on:
       - mongo
-    ports:
-      - 3000:3000
-    restart: unless-stopped
-    volumes:
-      - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
-      - ./app/data/grafana/plugins:/var/lib/grafana/plugins
+    networks:
+      - backend
 
   backend_web:
     restart: always
