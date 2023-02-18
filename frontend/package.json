@@ -9,13 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@syncfusion/ej2": "^20.4.50",
-    "@syncfusion/ej2-react-charts": "^20.4.49",
-    "@syncfusion/ej2-react-dropdowns": "^20.4.50",
-    "@syncfusion/ej2-react-grids": "^20.4.50",
-    "@syncfusion/ej2-react-inputs": "^20.4.48",
-    "@syncfusion/ej2-react-popups": "^20.4.49",
+    "@nextui-org/react": "^1.0.0-beta.12",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.8.1"
