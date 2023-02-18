@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="N3TPZUQrlmw5FUeRnDQk" name="Page-1">
-        <mxGraphModel dx="1112" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="741" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -9,7 +9,7 @@
                         <mxPoint x="530.25" y="189.0000000000001" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="21" value="Kafka Consumer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="6">
+                <mxCell id="21" value="Kafka Consumer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="6" vertex="1" connectable="0">
                     <mxGeometry x="0.2987" y="2" relative="1" as="geometry">
                         <mxPoint x="1" as="offset"/>
                     </mxGeometry>
@@ -20,14 +20,14 @@
                 <mxCell id="16" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="15" target="5" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="1" source="15" target="25">
+                <mxCell id="26" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="15" target="25" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="169" y="340"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="29" value="GET /exhauster&lt;br&gt;GET /exhauster/{exhauster_id}&lt;br&gt;GET /event?size&amp;amp;page&amp;amp;exhauster_id" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="26">
+                <mxCell id="29" value="GET /exhauster&lt;br&gt;GET /exhauster/{exhauster_id}&lt;br&gt;GET /event?size&amp;amp;page&amp;amp;exhauster_id" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="26" vertex="1" connectable="0">
                     <mxGeometry x="0.4895" y="4" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -35,16 +35,16 @@
                 <mxCell id="15" value="Frontend" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.client;" parent="1" vertex="1">
                     <mxGeometry x="130" y="480" width="78" height="76" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="EC2 instance contents" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_ec2_instance_contents;strokeColor=#D86613;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#D86613;dashed=0;" vertex="1" parent="1">
+                <mxCell id="18" value="EC2 instance contents" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_ec2_instance_contents;strokeColor=#D86613;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#D86613;dashed=0;" parent="1" vertex="1">
                     <mxGeometry x="340" y="124" width="460" height="486" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="Kafka Processor" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="18">
+                <mxCell id="23" value="Kafka Processor" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" parent="18" vertex="1">
                     <mxGeometry x="257" y="37.25" width="67.68" height="55.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="Analiz pipeline" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="18">
+                <mxCell id="24" value="Analiz pipeline" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" parent="18" vertex="1">
                     <mxGeometry x="253.16" y="376" width="67.68" height="55.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="REST Api" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="18">
+                <mxCell id="25" value="REST Api" style="sketch=0;aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" parent="18" vertex="1">
                     <mxGeometry x="79.99999999999994" y="208.25" width="67.68" height="55.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="Графана" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/other/Grafana.svg;" parent="18" vertex="1">
@@ -76,6 +76,11 @@
                         <mxPoint x="226.99999999999977" y="107.00000000000011" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="30" value="Сохранение ивентов&lt;br&gt;Обновление &lt;br&gt;статуса эксгаустеров" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="8">
+                    <mxGeometry x="0.0627" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
                 <mxCell id="9" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="18" source="5" target="7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
@@ -84,7 +89,7 @@
                         <mxPoint x="226.99999999999977" y="366" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="18" source="25" target="7">
+                <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="18" source="25" target="7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
             </root>
