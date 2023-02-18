@@ -4,7 +4,7 @@ GRANT ALL PRIVILEGES ON DATABASE db_evraz TO db_evraz;
 
 \c db_evraz;
 
-CREATE SCHEMA public;
+CREATE SCHEMA if not exists public;
 
 create table public.event(
     id           bigserial
