@@ -29,7 +29,7 @@ class StreamService:
     def dump_from_db(self) -> None:
         events = []
         for event in tqdm(self.mongo_repository.get_all_events()):
-            events.append(event)
+            events.append(event.dict())
 
         folder = Path("data/kafka_records_concat")
         folder.mkdir(exist_ok=True)
