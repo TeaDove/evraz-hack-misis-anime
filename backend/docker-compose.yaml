@@ -23,7 +23,9 @@ services:
       start_period: 40s
 
   grafana:
-    image: grafana/grafana:7.5.7
+    build:
+      context: .
+      dockerfile: DockerfileGrafana
     networks:
       - backend
     environment:
@@ -38,6 +40,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./app/data/grafana/plugins:/var/lib/grafana/plugins
 
   backend_web:
     restart: always
