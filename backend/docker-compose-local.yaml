@@ -36,14 +36,8 @@ services:
       MISIS_MONGO_PORT: 27017
       MISIS_MONGO_USERNAME: "root"
       MISIS_MONGO_PASSWORD: "root"
-      MISIS_UVICORN_HOST: "localhost"
+      MISIS_UVICORN_HOST: "0.0.0.0"
       MISIS_UVICORN_PORT: 8000
-    healthcheck:
-      test: curl "localhost:8000/ping"
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
     build:
       context: .
       dockerfile: DockerfileWeb
