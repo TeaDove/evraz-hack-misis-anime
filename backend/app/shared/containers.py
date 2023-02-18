@@ -17,8 +17,10 @@ def init_combat_container() -> Container:
 
     mongo_repository = MongoRepository()
 
-    stream_service = StreamService(
-        mapping_service=mapping_service, mongo_repository=mongo_repository
-    )
     exhauster_service = ExhausterService(mongo_repository=mongo_repository)
+    stream_service = StreamService(
+        mapping_service=mapping_service,
+        mongo_repository=mongo_repository,
+        exhauster_service=exhauster_service,
+    )
     return Container(stream_service=stream_service, exhauster_service=exhauster_service)

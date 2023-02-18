@@ -8,7 +8,8 @@ from tqdm import tqdm
 
 import pandas as pd
 from repository.mongo_repository import MongoRepository
-from schemas.exhauster import ExhausterEvent
+from schemas.event import ExhausterEvent
+from service.exhauster_service import ExhausterService
 from service.mapping_service import MappingService
 from shared.base import logger
 
@@ -17,6 +18,7 @@ from shared.base import logger
 class StreamService:
     mapping_service: MappingService
     mongo_repository: MongoRepository
+    exhauster_service: ExhausterService
 
     def process_record(self, record: Dict[str, Any]) -> None:
         for idx in range(self.mapping_service.exhauster_count):
@@ -25,6 +27,7 @@ class StreamService:
             )
             self.mapping_service.map_signals(exhauster_event, record)
             self.mongo_repository.insert_event(exhauster_event, record)
+            self.exhauster_service.update_exhauster(exhauster_event)
 
     def dump_from_db(self) -> None:
         events = []

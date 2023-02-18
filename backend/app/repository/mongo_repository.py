@@ -1,13 +1,14 @@
 import enum
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable
+from typing import Any, Dict, Iterable, Optional
 
 from pydantic import ValidationError
 
 import pymongo
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
-from schemas.exhauster import ExhausterEvent
+from schemas.event import ExhausterEvent
+from schemas.exhauster import Exhauster
 from shared.base import logger
 from shared.settings import app_settings
 
@@ -28,6 +29,7 @@ class MongoRepository:
         )
         self.database = self.client.get_database("test")
         self.collection_event = self.database.get_collection("event")
+        self.collection_exhauster = self.database.get_collection("exhauster")
 
     def get_all_events(self) -> Iterable[ExhausterEvent]:
         curs = self.collection_event.find()
@@ -67,3 +69,24 @@ class MongoRepository:
                 yield ExhausterEvent.parse_obj(document)
             except ValidationError:
                 logger.exception("document.validation.error")
+
+    def create_exhauster(self, exhauster: Exhauster) -> None:
+        try:
+            self.collection_exhauster.insert_one(exhauster.jsonable_dict())
+        except DuplicateKeyError:
+            logger.exception("duplicated.key", exc_info=True)
+
+    def get_exhausters(self) -> Iterable[Exhauster]:
+        curs = self.collection_exhauster.find()
+        for document in curs:
+            try:
+                yield Exhauster.parse_obj(document)
+            except ValidationError:
+                logger.exception("document.validation.error")
+
+    def get_exhauster(self, exhauster_id: int) -> Optional[Exhauster]:
+        document = self.collection_exhauster.find_one({"exhauster_id": exhauster_id})
+        if document is None:
+            return None
+
+        return Exhauster.parse_obj(document)

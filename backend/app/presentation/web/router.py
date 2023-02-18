@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query, status
 from fastapi.exceptions import HTTPException
 
 from presentation.dependencies import container
-from presentation.schemas import ExhausterEventsResponse
+from presentation.schemas import ExhausterEventsResponse, ExhaustersResponse
 from repository.mongo_repository import SortOrders
 
 router = APIRouter(prefix="")
@@ -30,3 +30,9 @@ async def get_exhauster_events(
         exhauster_id=exhauster_id, sort_order=sort_order, page=page, size=size
     )
     return ExhausterEventsResponse(events=list(result))
+
+
+@router.get("/exhauster", response_model=ExhaustersResponse)
+async def get_exhausters():
+    result = container.exhauster_service.get_exhausters()
+    return ExhaustersResponse(exhausters=list(result))

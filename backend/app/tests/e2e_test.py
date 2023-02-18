@@ -10,3 +10,10 @@ class TestClass:
 
     def test_mongo_connect(self):
         container.stream_service.mongo_repository.get_all_events()
+
+    def test_create_exhausters(self):
+        exhausters_stubs = container.exhauster_service.exhausters_stubs
+        for exhauster in exhausters_stubs:
+            container.exhauster_service.mongo_repository.create_exhauster(
+                exhauster=exhauster
+            )
