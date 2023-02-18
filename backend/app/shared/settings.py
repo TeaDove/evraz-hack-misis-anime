@@ -16,7 +16,7 @@ class AppSettings(BaseSettings):
     mongo_password: str
 
     uvicorn_host: str = "localhost"
-    uvicorn_port: int = 8080
+    uvicorn_port: int = 8000
     uvicorn_workers: int = 8
 
     class Config:
