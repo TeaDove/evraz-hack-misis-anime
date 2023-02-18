@@ -10,12 +10,12 @@ ENV PYTHONFAULTHANDLER=1 \
 
 RUN pip install "poetry==1.3.2"
 
-WORKDIR /code
+WORKDIR /app
 COPY poetry.lock pyproject.toml /code/
 
 RUN poetry config virtualenvs.create false \
     && poetry install --no-dev --no-interaction --no-ansi
 
-COPY ./app /code
+COPY ./app .
 
 CMD ["python3", "kafka_entrypoint.py"]
