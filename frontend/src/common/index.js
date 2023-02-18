@@ -1,3 +1,3 @@
-import {fetchExhausters} from "./backend.js"
+import {fetchExhausters, fetchExhausterInfo} from "./backend.js"
 
-export {fetchExhausters}
+export {fetchExhausters, fetchExhausterInfo}
