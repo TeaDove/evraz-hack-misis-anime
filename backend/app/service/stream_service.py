@@ -24,7 +24,19 @@ class StreamService:
                 created_at=record.get("moment"), exhauster_id=idx
             )
             self.mapping_service.map_signals(exhauster_event, record)
-            self.mongo_repository.insert_event(exhauster_event)
+            self.mongo_repository.insert_event(exhauster_event, record)
+
+    def dump_from_db(self) -> None:
+        events = []
+        for event in tqdm(self.mongo_repository.get_all_events()):
+            events.append(event)
+
+        folder = Path("data/kafka_records_concat")
+        folder.mkdir(exist_ok=True)
+
+        pd.json_normalize(events).to_parquet(
+            folder / f"{datetime.utcnow().strftime('%Y-%m-%dT%H:%M')}.pqt"
+        )
 
     def store_records_localy(self, record: Dict[str, Any]) -> None:
         events = []

@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from typing import Any, Dict, Iterable
+
+from pydantic import ValidationError
 
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
@@ -19,11 +22,21 @@ class MongoRepository:
         self.database = self.client.get_database("test")
         self.collection_event = self.database.get_collection("event")
 
-    def get_all_events(self):
-        return self.collection_event.find_one()
+    def get_all_events(self) -> Iterable[ExhausterEvent]:
+        curs = self.collection_event.find()
+        for document in curs:
+            try:
+                yield ExhausterEvent.parse_obj(document)
+            except ValidationError:
+                logger.exception("document.validation.error")
 
-    def insert_event(self, event: ExhausterEvent):
+    def insert_event(self, event: ExhausterEvent, record: Dict[str, Any]):
         try:
-            self.collection_event.insert_one(event.jsonable_dict())
+            self.collection_event.insert_one(
+                dict(
+                    original_record=record,
+                    **event.jsonable_dict(),
+                )
+            )
         except DuplicateKeyError:
             logger.exception("duplicated.key", exc_info=True)

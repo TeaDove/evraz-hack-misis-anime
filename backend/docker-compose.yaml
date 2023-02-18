@@ -12,13 +12,12 @@ services:
       - 27017:27017
     volumes:
       - './app/data/mongo_data:/data/db'
+  # backend_web:
+  #   build:
+  #     context: .
+  #     dockerfile: DockerfileWeb
 
-  backend_web:
-    build:
-      context: .
-      dockerfile: DockerfileWeb
-
-  backend_kafka_processor:
-    build:
-      context: .
-      dockerfile: DockerfileKafka
+  # backend_kafka_processor:
+  #   build:
+  #     context: .
+  #     dockerfile: DockerfileKafka
