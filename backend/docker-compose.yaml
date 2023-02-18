@@ -36,7 +36,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
-      - ./app/data/grafana/grafana-data:/var/lib/grafana
 
   backend_web:
     restart: always
