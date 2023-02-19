@@ -17,4 +17,11 @@ const exhausterStatus = (status) => {
   return result
 }
 
-export {exhausterStatus}
+
+const roundNum = (x, digits) => {
+  if (!digits) digits = 0
+  const y = Math.pow(10, digits)
+  return Math.round(x * y) / y
+}
+
+export {exhausterStatus, roundNum}
