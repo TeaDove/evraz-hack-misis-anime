@@ -41,7 +41,7 @@ services:
       MISIS_UVICORN_PORT: 8000
       MISIS_PG_HOST: "postgres"
     build:
-      context: .
+      context: ./backend
       dockerfile: DockerfileWeb
     networks:
       - backend
@@ -56,7 +56,7 @@ services:
     environment:
       <<: *backend_enviroments
     build:
-      context: .
+      context: ./backend
       dockerfile: DockerfileKafka
     networks:
       - backend
@@ -99,6 +99,15 @@ services:
     volumes:
       - ./extra/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./app/data/pg/:/var/lib/postgresql/data/
+    networks:
+      - backend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - backend_web
     networks:
       - backend
 
