@@ -24,6 +24,12 @@ const Sidebar = () => {
             >
               <span className="capitalize ">Информация</span>
             </NavLink>
+          <NavLink
+            to={`/charts`}
+            className={({ isActive }) => (isActive ? activeLink : normalLink)}
+          >
+            <span className="capitalize ">Статистика</span>
+          </NavLink>
         </div>
       </div>
     </div>

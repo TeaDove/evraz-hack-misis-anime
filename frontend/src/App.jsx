@@ -3,7 +3,7 @@ import "./App.css"
 import {HashRouter, Routes, Route} from "react-router-dom"
 import {Sidebar} from "./components"
 import {useStateContext} from "./contexts/ContextProvider.jsx"
-import {ExhausterInfo, MainPage} from "./pages"
+import {Charts, ExhausterInfo, MainPage} from "./pages"
 
 const App = () => {
   const {colorMode} = useStateContext();
@@ -19,7 +19,8 @@ const App = () => {
           <div>
             <Routes>
               <Route path="/" element={<MainPage/>} />
-              <Route path="/exhauster/:exhausterId" element={<ExhausterInfo />} />
+              <Route path="/exhauster/:exhausterId" element={<ExhausterInfo/>} />
+              <Route path="/charts" element={<Charts/>} />
             </Routes>
           </div>
         </div>
