@@ -1,0 +1,107 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo:6.0.4
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: evraz
+    ports:
+      - 27017:27017
+    volumes:
+      - './app/data/mongo_data:/data/db'
+      - './extra/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+    networks:
+      - backend
+    healthcheck:
+      test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  backend_web:
+    restart: always
+    environment:
+      &backend_enviroments
+      MISIS_KAFKA_HOST: "rc1a-b5e65f36lm3an1d5.mdb.yandexcloud.net:9091"
+      MISIS_KAFKA_TOPIC: "zsmk-9433-dev-01"
+      MISIS_KAFKA_USER: "9433_reader"
+      MISIS_KAFKA_PASSWORD: "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
+      MISIS_KAFKA_READ_FROM_START: "false"
+      # MISIS_KAFKA_MINUS_OFFSET: "None"
+      MISIS_MONGO_DATABASE: "evraz"
+      MISIS_MONGO_HOST: "mongo"
+      MISIS_MONGO_PORT: 27017
+      MISIS_MONGO_USERNAME: "root"
+      MISIS_MONGO_PASSWORD: "root"
+      MISIS_UVICORN_HOST: "0.0.0.0"
+      MISIS_UVICORN_PORT: 8000
+      MISIS_PG_HOST: "postgres"
+    build:
+      context: .
+      dockerfile: DockerfileWeb
+    networks:
+      - backend
+    depends_on:
+      - mongo
+      - backend_kafka_processor
+    ports:
+      - 8000:8000
+
+  backend_kafka_processor:
+    restart: always
+    environment:
+      <<: *backend_enviroments
+    build:
+      context: .
+      dockerfile: DockerfileKafka
+    networks:
+      - backend
+    depends_on:
+      - mongo
+
+  grafana:
+    image: grafana/grafana:9.3.6
+    networks:
+      - backend
+    environment:
+      - "GF_SECURITY_ADMIN_USER=admin"
+      - "GF_SECURITY_ADMIN_PASSWORD=coh&ja3teaJohmoh9jain4afaiT3iF"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_SERVER_DOMAIN=0.0.0.0"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - "GF_AUTH_ANONYMOUS_ORG_NAME=Main Org."
+      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer"
+      - "GF_AUTH_ANONYMOUS_HIDE_VERSION=true"
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./app/data/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./app/data/grafana/datasources:/etc/grafana/datasources
+      - ./app/data/grafana/plugins:/var/lib/grafana/plugins
+
+  postgres:
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_USER: db_evraz
+      POSTGRES_PASSWORD: db_evraz
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - ./extra/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./app/data/pg/:/var/lib/postgresql/data/
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: backend
