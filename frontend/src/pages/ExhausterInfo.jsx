@@ -317,7 +317,7 @@ const ExhausterInfo = () => {
           </div>
           <div
             className="bg-green-500 rounded p-4"
-            onMouseEnter={handleEnter("ps-1")}
+            onMouseEnter={handleEnter("ps-5")}
             onMouseLeave={handleLeave}
           >
             <span className="text-white opacity-80 font-bold">
