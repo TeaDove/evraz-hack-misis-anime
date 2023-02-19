@@ -31,6 +31,9 @@ class AppSettings(BaseSettings):
     uvicorn_workers: int = mp.cpu_count() * 2
     uvicorn_log_level: str = "WARNING"
 
+    max_temperature_celsius: int = 1000
+    min_temperature_celsius: int = 100
+
     class Config:
         env_prefix = "misis_"
         env_file = ".env"
