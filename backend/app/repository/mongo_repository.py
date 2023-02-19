@@ -40,15 +40,22 @@ class MongoRepository:
                 logger.exception("document.validation.error")
 
     def insert_event(self, event: ExhausterEvent, record: Dict[str, Any]):
+        document = dict(
+            original_record=record,
+            **event.jsonable_dict(),
+        )
         try:
-            self.collection_event.insert_one(
-                dict(
-                    original_record=record,
-                    **event.jsonable_dict(),
-                )
-            )
+            self.collection_event.insert_one(document)
         except DuplicateKeyError:
-            logger.warning("duplicated.key.{}", event.created_at)
+            self.collection_event.replace_one(
+                {"echauster_id": event.exhauster_id, "created_at": event.created_at},
+                document,
+            )
+            logger.warning(
+                "duplicated.key.{}.{}.replacing.it",
+                event.exhauster_id,
+                event.created_at,
+            )
 
     def get_events_by_exhauster(
         self, exhauster_id: int, sort_order: SortOrders, page: int, size: int

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from sqlalchemy import Column, DateTime, Integer, create_engine, literal_column
+from sqlalchemy import Column, DateTime, Integer, create_engine, delete, literal_column
 from sqlalchemy.dialects.postgresql import JSONB, insert
 from sqlalchemy.orm import Session, declarative_base
 
@@ -41,8 +41,18 @@ class PGRepository:
                 .on_conflict_do_nothing()
                 .returning(literal_column("*"))
             )
-            result = session.execute(statement)
+            result = session.execute(statement).scalar()
             if result is None:
-                logger.exception("duplicated.key")
-                session.rollback()
+                logger.warning(
+                    "duplicated.key.{}.{}.replacing.it",
+                    event.exhauster_id,
+                    event.created_at,
+                )
+                session.execute(
+                    delete(PGEvent).where(
+                        PGEvent.exhauster_id == event.exhauster_id,
+                        PGEvent.created_at == event.created_at,
+                    )
+                )
+                session.execute(statement)
             session.commit()
