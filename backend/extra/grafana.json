@@ -457,7 +457,7 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "dashed"
                         }
                     },
                     "mappings": [],
@@ -470,7 +470,7 @@
                             },
                             {
                                 "color": "red",
-                                "value": 80
+                                "value": 7.1
                             }
                         ]
                     },
@@ -579,7 +579,7 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "dashed"
                         }
                     },
                     "mappings": [],
@@ -592,7 +592,7 @@
                             },
                             {
                                 "color": "red",
-                                "value": 80
+                                "value": 7.1
                             }
                         ]
                     },
@@ -701,7 +701,7 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "dashed"
                         }
                     },
                     "mappings": [],
@@ -714,7 +714,7 @@
                             },
                             {
                                 "color": "red",
-                                "value": 80
+                                "value": 65
                             }
                         ]
                     },
@@ -825,7 +825,7 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "dashed"
                         }
                     },
                     "mappings": [],
@@ -838,7 +838,7 @@
                             },
                             {
                                 "color": "red",
-                                "value": 80
+                                "value": 7.1
                             }
                         ]
                     },
@@ -947,7 +947,7 @@
                             "mode": "none"
                         },
                         "thresholdsStyle": {
-                            "mode": "off"
+                            "mode": "dashed"
                         }
                     },
                     "mappings": [],
@@ -960,7 +960,7 @@
                             },
                             {
                                 "color": "red",
-                                "value": 80
+                                "value": 7.1
                             }
                         ]
                     },
@@ -1325,8 +1325,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1449,8 +1448,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1573,8 +1571,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1697,8 +1694,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1788,8 +1784,8 @@
                 "auto_min": "10s",
                 "current": {
                     "selected": false,
-                    "text": "1h",
-                    "value": "1h"
+                    "text": "1m",
+                    "value": "1m"
                 },
                 "hide": 0,
                 "name": "group_interval",
@@ -1800,7 +1796,7 @@
                         "value": "$__auto_interval_group_interval"
                     },
                     {
-                        "selected": false,
+                        "selected": true,
                         "text": "1m",
                         "value": "1m"
                     },
@@ -1815,7 +1811,7 @@
                         "value": "30m"
                     },
                     {
-                        "selected": true,
+                        "selected": false,
                         "text": "1h",
                         "value": "1h"
                     },
@@ -1921,13 +1917,13 @@
         ]
     },
     "time": {
-        "from": "2023-02-15T20:36:38.361Z",
-        "to": "2023-02-16T20:25:38.819Z"
+        "from": "now-24h",
+        "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Main",
     "uid": "PZHmNE1Vk",
-    "version": 5,
+    "version": 8,
     "weekStart": ""
 }
