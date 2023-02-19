@@ -83,6 +83,9 @@ services:
     restart: unless-stopped
     volumes:
       - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./app/data/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./app/data/grafana/datasources:/etc/grafana/datasources
+      - ./app/data/grafana/plugins:/var/lib/grafana/plugins
 
   postgres:
     image: postgres:15.2-alpine
