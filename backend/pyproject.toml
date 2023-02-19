@@ -17,6 +17,9 @@ openpyxl = "^3.1.1"
 tqdm = "^4.64.1"
 pyarrow = "^11.0.0"
 pymongo = {extras = ["srv"], version = "^4.3.3"}
+orjson = "^3.8.6"
+sqlalchemy = "^1.4.36"
+psycopg2-binary = "^2.9.3"
 
 
 [build-system]

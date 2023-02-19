@@ -17,7 +17,6 @@ const exhausterStatus = (status) => {
   return result
 }
 
-
 const roundNum = (x, digits) => {
   if (!digits) digits = 0
   const y = Math.pow(10, digits)

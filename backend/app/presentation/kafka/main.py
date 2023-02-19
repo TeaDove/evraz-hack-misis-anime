@@ -33,21 +33,29 @@ def _set_consumer() -> KafkaConsumer:
     )
     topic = app_settings.kafka_topic
     partitions = consumer.partitions_for_topic(topic)
-    topic_partitions = tuple(
-        TopicPartition(topic, partition) for partition in partitions
-    )
+    topic_partitions = tuple(TopicPartition(topic, partition) for partition in partitions)
     consumer.assign(topic_partitions)
     if app_settings.kafka_read_from_start:
         consumer.seek_to_beginning(*topic_partitions)
+    else:
+        consumer.seek_to_end(*topic_partitions)
+        if app_settings.kafka_minus_offset:
+            for partition in topic_partitions:
+                current = consumer.position(partition)
+                new_offset = current - app_settings.kafka_minus_offset
+                consumer.seek(partition, new_offset)
+                logger.info("setting.offset.{}", new_offset)
+
     return consumer
 
 
 def listen_kafka() -> None:
+    logger.info("start.processing.records")
     consumer = _set_consumer()
     executor = ThreadPoolExecutor()
 
     for idx, record in enumerate(consumer):
-        logger.debug(f"start.processing.record.{idx}")
+        logger.info("start.processing.record.{}", idx)
         executor.submit(_process_record_safe, record)
 
 

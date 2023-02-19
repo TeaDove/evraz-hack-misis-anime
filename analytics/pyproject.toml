@@ -1,0 +1,16 @@
+[tool.poetry]
+name        = "evraz-anime-analytics"
+version     = "0.1.0"
+description = ""
+readme      = "README.md"
+authors     = ["xxx <xxx@xxx.xxx>"]
+packages    = [{ include = "evraz_anime_analytics", from = "src" }]
+
+[tool.poetry.dependencies]
+python  = "~3.10"
+pandas  = "^1.5.3"
+pyarrow = "^11.0.0"
+
+[build-system]
+requires      = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
