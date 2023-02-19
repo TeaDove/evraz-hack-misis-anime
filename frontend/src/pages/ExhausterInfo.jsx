@@ -68,7 +68,7 @@ const ExhausterInfo = () => {
             width="75%" height="75%"
             primaryColor="#f3f3f3"
             secondaryColor="#e6e6e6"
-            activeColor="#86efac"
+            activeColor="#93c5fd"
             active={active}
           />
         </div>
