@@ -59,7 +59,7 @@ def resample_data(df: pd.DataFrame, freq: str = "1min") -> pd.DataFrame:
     return df_resampled
 
 
-def get_regions(x: np.ndarray) -> List[List[int]]:
+def get_regions(x: np.ndarray) -> List[List[int]]:  # noqa: CCR001
     """
     Get regions of the DataFrame.
     :param df: pandas DataFrame
@@ -68,8 +68,8 @@ def get_regions(x: np.ndarray) -> List[List[int]]:
     regions: List[List[int]] = []
     region_continous = False
     for i, k in enumerate(x):
-        if k == True:
-            if region_continous == False:
+        if k:
+            if not region_continous:
                 regions.append([i])
                 region_continous = True
             else:
@@ -80,9 +80,7 @@ def get_regions(x: np.ndarray) -> List[List[int]]:
     return regions
 
 
-def get_data_from_last_repairment(
-    df: pd.DataFrame, last_repairment_date: datetime
-) -> pd.DataFrame:
+def get_data_from_last_repairment(df: pd.DataFrame, last_repairment_date: datetime) -> pd.DataFrame:
     """
     Get data from last repairment of the DataFrame.
     :param df: pandas DataFrame
@@ -109,7 +107,7 @@ def find_closest_business_day(date: datetime) -> datetime:
 
 def find_out_of_norm_samples(
     df: pd.DataFrame,
-) -> Tuple[List[List[int]], List[List[float]], List[List[int]], List[List[float]],]:
+) -> Tuple[List[List[int]], List[List[float]], List[List[int]], List[List[float]],]:  # noqa: TAE002
     """Find out of norm samples in the DataFrame.
     :param df: pandas DataFrame
     :return: list of out of norm samples
@@ -127,29 +125,17 @@ def find_out_of_norm_samples(
         ]:
             sel_col = f"bearing_{bearing_id}.{k}.value"
             if sel_col in df.columns:
-                out_of_norm_points_warning = (
-                    df[sel_col] > df[f"bearing_{bearing_id}.{k}.warning_max"]
-                ).to_numpy()
+                out_of_norm_points_warning = (df[sel_col] > df[f"bearing_{bearing_id}.{k}.warning_max"]).to_numpy()
                 df_ow = df[out_of_norm_points_warning]
-                diff_warning = (
-                    df_ow[sel_col] - df_ow[f"bearing_{bearing_id}.{k}.warning_max"]
-                )
-                out_of_norm_points_alarm = (
-                    df[sel_col] > df[f"bearing_{bearing_id}.{k}.alarm_max"]
-                ).to_numpy()
+                diff_warning = df_ow[sel_col] - df_ow[f"bearing_{bearing_id}.{k}.warning_max"]
+                out_of_norm_points_alarm = (df[sel_col] > df[f"bearing_{bearing_id}.{k}.alarm_max"]).to_numpy()
                 df_oa = df[out_of_norm_points_alarm]
-                diff_alarm = (
-                    df_oa[sel_col] - df_oa[f"bearing_{bearing_id}.{k}.alarm_max"]
-                )
+                diff_alarm = df_oa[sel_col] - df_oa[f"bearing_{bearing_id}.{k}.alarm_max"]
 
-                out_of_norm_points_warning_regions = get_regions(
-                    out_of_norm_points_warning
-                )
+                out_of_norm_points_warning_regions = get_regions(out_of_norm_points_warning)
                 out_of_norm_points_alarm_regions = get_regions(out_of_norm_points_alarm)
 
-                out_of_norm_points_warning_all.extend(
-                    out_of_norm_points_warning_regions
-                )
+                out_of_norm_points_warning_all.extend(out_of_norm_points_warning_regions)
                 out_of_norm_points_alarm_all.extend(out_of_norm_points_alarm_regions)
 
                 warning_diffs_all.extend(diff_warning)
@@ -162,7 +148,7 @@ def find_out_of_norm_samples(
     )
 
 
-def calculate_penalty(
+def calculate_penalty(  # noqa: CCR001
     warning_regions: List[List[int]],
     warning_diffs: List[List[float]],
     alarm_regions: List[List[int]],
@@ -177,7 +163,9 @@ def calculate_penalty(
     penalty: float = 0.0
     for region, diff in zip(warning_regions, warning_diffs):
         if region is not None and diff is not None:
-            penalty += np.mean(diff) * WARNING_PENALTY_DIFF_COEF + len(region) * WARNING_PENALTY_LEN_COEF  # type: ignore
+            penalty += (
+                np.mean(diff) * WARNING_PENALTY_DIFF_COEF + len(region) * WARNING_PENALTY_LEN_COEF
+            )  # type: ignore
     for region, diff in zip(alarm_regions, alarm_diffs):
         if region is not None and diff is not None:
             penalty += np.mean(diff) * ALARM_PENALTY_DIFF_COEF + len(region) * ALARM_PENALTY_LEN_COEF  # type: ignore

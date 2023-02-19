@@ -8,9 +8,7 @@ def convert_dtypes(df: pd.DataFrame):
     :return: pandas DataFrame
     """
     df["exhauster_id"] = df["exhauster_id"].astype("uint8")
-    df["gate_valve.gas_valve_closed"] = df[
-        "gate_valve.gas_valve_closed"
-    ].convert_dtypes()
+    df["gate_valve.gas_valve_closed"] = df["gate_valve.gas_valve_closed"].convert_dtypes()
     df["gate_valve.gas_valve_open"] = df["gate_valve.gas_valve_open"].convert_dtypes()
     df["work.is_working"] = df["work.is_working"].convert_dtypes()
     return df
@@ -35,7 +33,5 @@ def remove_nan_and_duplicates(df: pd.DataFrame):
     df = df.dropna(subset=["work.is_working"])
     df_groupby = df.groupby("exhauster_id").bfill()
     for column_id in range(len(df_groupby.columns)):
-        df.loc[:, df_groupby.columns[column_id]] = df_groupby[
-            df_groupby.columns[column_id]
-        ]
+        df.loc[:, df_groupby.columns[column_id]] = df_groupby[df_groupby.columns[column_id]]
     return df

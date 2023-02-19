@@ -57,9 +57,7 @@ class MongoRepository:
             self.collection_event.find({"exhauster_id": exhauster_id})
             .sort(
                 "created_at",
-                pymongo.ASCENDING
-                if sort_order == SortOrders.ASC
-                else pymongo.DESCENDING,
+                pymongo.ASCENDING if sort_order == SortOrders.ASC else pymongo.DESCENDING,
             )
             .skip(size * page)
             .limit(size)

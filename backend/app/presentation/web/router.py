@@ -47,8 +47,6 @@ async def get_exhauster(exhauster_id: int = Path(..., example=1)):
     result = container.exhauster_service.get_exhauster(exhauster_id=exhauster_id)
 
     if result is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="exhauster not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="exhauster not found")
 
     return ExhausterResponse(exhauster=result)

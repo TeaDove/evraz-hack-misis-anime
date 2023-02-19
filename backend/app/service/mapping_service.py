@@ -34,18 +34,12 @@ class MappingService:
         self.exhauster_row_to_signal_id: Dict[Tuple[int, int], str] = {}
         for exhauster_id, mapping in enumerate(mappings):
             for idx, row in mapping.iterrows():
-                self.exhauster_row_to_signal_id[(exhauster_id, idx)] = row[
-                    "Код сигнала в Kafka"
-                ]
+                self.exhauster_row_to_signal_id[(exhauster_id, idx)] = row["Код сигнала в Kafka"]
 
-    def _get_value(
-        self, record: Dict[str, Any], exhauster_id: int, row: int
-    ) -> Optional[float]:
+    def _get_value(self, record: Dict[str, Any], exhauster_id: int, row: int) -> Optional[float]:
         return record.get(self.exhauster_row_to_signal_id[(exhauster_id, row)])
 
-    def _get_bool_value(
-        self, record: Dict[str, Any], exhauster_id: int, row: int
-    ) -> Optional[bool]:
+    def _get_bool_value(self, record: Dict[str, Any], exhauster_id: int, row: int) -> Optional[bool]:
         value = record.get(self.exhauster_row_to_signal_id[(exhauster_id, row)])
         if value is None:
             return None
@@ -64,13 +58,9 @@ class MappingService:
         warning_min = self._get_value(record, exhauster_id, start_row + 4)
         if value is None:
             status = AlarmStatuses.UNKNOWN
-        elif (alarm_min is not None and value < alarm_min) or (
-            alarm_max is not None and value > alarm_max
-        ):
+        elif (alarm_min is not None and value < alarm_min) or (alarm_max is not None and value > alarm_max):
             status = AlarmStatuses.ALARM
-        elif (warning_min is not None and value < warning_min) or (
-            warning_max is not None and value > warning_max
-        ):
+        elif (warning_min is not None and value < warning_min) or (warning_max is not None and value > warning_max):
             status = AlarmStatuses.WARNING
         else:
             status = AlarmStatuses.OK
@@ -90,9 +80,7 @@ class MappingService:
         exhauster_id: int,
         start_row: int,
     ) -> Bearing:
-        return Bearing(
-            temperature=self._get_alarmable_value(record, exhauster_id, start_row)
-        )
+        return Bearing(temperature=self._get_alarmable_value(record, exhauster_id, start_row))
 
     def _get_vibrational_bearing(
         self,
@@ -103,53 +91,27 @@ class MappingService:
         return VibrationalBearing(
             temperature=self._get_alarmable_value(record, exhauster_id, start_row),
             vibration=BearingVibration(
-                vibration_axial=self._get_alarmable_value(
-                    record, exhauster_id, start_row + 5
-                ),
-                vibration_horizontal=self._get_alarmable_value(
-                    record, exhauster_id, start_row + 10
-                ),
-                vibration_vertical=self._get_alarmable_value(
-                    record, exhauster_id, start_row + 15
-                ),
+                vibration_axial=self._get_alarmable_value(record, exhauster_id, start_row + 5),
+                vibration_horizontal=self._get_alarmable_value(record, exhauster_id, start_row + 10),
+                vibration_vertical=self._get_alarmable_value(record, exhauster_id, start_row + 15),
             ),
         )
 
-    def map_signals(
-        self, exhauster_event: ExhausterEvent, record: Dict[str, Any]
-    ) -> None:
+    def map_signals(self, exhauster_event: ExhausterEvent, record: Dict[str, Any]) -> None:
         exhauster_id = exhauster_event.exhauster_id
 
-        exhauster_event.status.bearing_1 = self._get_vibrational_bearing(
-            record, exhauster_id, start_row=0
-        )
-        exhauster_event.status.bearing_2 = self._get_vibrational_bearing(
-            record, exhauster_id, start_row=20
-        )
+        exhauster_event.status.bearing_1 = self._get_vibrational_bearing(record, exhauster_id, start_row=0)
+        exhauster_event.status.bearing_2 = self._get_vibrational_bearing(record, exhauster_id, start_row=20)
 
-        exhauster_event.status.bearing_3 = self._get_bearing(
-            record, exhauster_id, start_row=40
-        )
-        exhauster_event.status.bearing_4 = self._get_bearing(
-            record, exhauster_id, start_row=45
-        )
-        exhauster_event.status.bearing_5 = self._get_bearing(
-            record, exhauster_id, start_row=50
-        )
-        exhauster_event.status.bearing_6 = self._get_bearing(
-            record, exhauster_id, start_row=55
-        )
+        exhauster_event.status.bearing_3 = self._get_bearing(record, exhauster_id, start_row=40)
+        exhauster_event.status.bearing_4 = self._get_bearing(record, exhauster_id, start_row=45)
+        exhauster_event.status.bearing_5 = self._get_bearing(record, exhauster_id, start_row=50)
+        exhauster_event.status.bearing_6 = self._get_bearing(record, exhauster_id, start_row=55)
 
-        exhauster_event.status.bearing_7 = self._get_vibrational_bearing(
-            record, exhauster_id, start_row=60
-        )
-        exhauster_event.status.bearing_8 = self._get_vibrational_bearing(
-            record, exhauster_id, start_row=80
-        )
+        exhauster_event.status.bearing_7 = self._get_vibrational_bearing(record, exhauster_id, start_row=60)
+        exhauster_event.status.bearing_8 = self._get_vibrational_bearing(record, exhauster_id, start_row=80)
 
-        exhauster_event.status.bearing_9 = self._get_bearing(
-            record, exhauster_id, start_row=100
-        )
+        exhauster_event.status.bearing_9 = self._get_bearing(record, exhauster_id, start_row=100)
 
         exhauster_event.status.cooler_water = TemperatureValue(
             temperature_after=self._get_value(record, exhauster_id, 105),
@@ -183,6 +145,4 @@ class MappingService:
             oil_pressure=self._get_value(record, exhauster_id, 119),
         )
 
-        exhauster_event.status.work = WorkValue(
-            is_working=self._get_bool_value(record, exhauster_id, 120)
-        )
+        exhauster_event.status.work = WorkValue(is_working=self._get_bool_value(record, exhauster_id, 120))
