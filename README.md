@@ -37,6 +37,7 @@
 ### Доступ
 Фронтенд сайт доступен по http://158.160.13.117
 Swagger доступен по http://158.160.13.117:8000/docs
+Графана: http://158.160.13.117:3000/d/PZHmNE1Vk/main-copy?orgId=1&kiosk=&from=now-12h&to=now
 
 ### Запуск
 - backend:
