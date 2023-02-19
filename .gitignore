@@ -1,5 +1,10 @@
 *.code-workspace
 **/CA.pem
+backend/app/data/mongo_data
+backend/app/data/pg
+backend/app/data/grafana
+backend/app/data/kafka_records
+backend/app/data/kafka_records_concat
 
 ### SAM BUILD ###
 **/.aws-sam
