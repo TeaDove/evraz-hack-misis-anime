@@ -57,7 +57,7 @@ docker-compose up
 cd frontend
 yarn install && yarn dev --host=10.129.0.25 --port=80
 ```
-- Все сразу:
+- Все сразу: (пока не работает, запускайте бекенд и фронтенд отдельно)
 ```bash
 docker-compose up
 ```
