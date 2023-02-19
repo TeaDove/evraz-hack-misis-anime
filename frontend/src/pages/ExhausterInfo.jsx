@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Button, Col, Container, Loading, Progress, Row} from "@nextui-org/react"
 import {IoChevronBack, IoSnow, RxReload} from "react-icons/all.js"
 import {ExhausterSchema} from "../components"
-import {fetchExhausterInfo} from "../common"
+import {exhausterStatus, fetchExhausterInfo} from "../common"
 import {useNavigate, useParams} from "react-router-dom"
 
 const ExhausterInfo = () => {
@@ -12,6 +12,13 @@ const ExhausterInfo = () => {
   const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
+
+  const bearingStyles = {
+    "UNKNOWN": "bg-gray-500",
+    "OK": "bg-green-500",
+    "WARNING": "bg-yellow-500",
+    "ALARM": "bg-rose-500"
+  }
 
   const loadData = () => {
     fetchExhausterInfo(exhausterId).then(e => {
@@ -233,7 +240,7 @@ const ExhausterInfo = () => {
         </span>
         <div className="grid grid-cols-5 grid-rows-2 gap-3 mt-4">
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_1"])]}`}
             onMouseEnter={handleEnter("ps-1")}
             onMouseLeave={handleLeave}
           >
@@ -262,10 +269,13 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_2"])]}`}
             onMouseEnter={handleEnter("ps-2")}
             onMouseLeave={handleLeave}
           >
+            <span className="text-white opacity-80 font-bold">
+              №2
+            </span>
             <div className="text-base font-extrabold text-white flex justify-between mt-4">
               <span>Темп.</span>
               <span>{(status.bearing_2 && status.bearing_2.temperature) ?
@@ -288,7 +298,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_3"])]}`}
             onMouseEnter={handleEnter("ps-3")}
             onMouseLeave={handleLeave}
           >
@@ -302,7 +312,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_4"])]}`}
             onMouseEnter={handleEnter("ps-4")}
             onMouseLeave={handleLeave}
           >
@@ -316,7 +326,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_5"])]}`}
             onMouseEnter={handleEnter("ps-5")}
             onMouseLeave={handleLeave}
           >
@@ -330,7 +340,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_7"])]}`}
             onMouseEnter={handleEnter("ps-7")}
             onMouseLeave={handleLeave}
           >
@@ -359,7 +369,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_8"])]}`}
             onMouseEnter={handleEnter("ps-8")}
             onMouseLeave={handleLeave}
           >
@@ -388,7 +398,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4"
+            className={`rounded p-4 ${bearingStyles[exhausterStatus(status["bearing_6"])]}`}
             onMouseEnter={handleEnter("ps-6")}
             onMouseLeave={handleLeave}
           >
@@ -402,7 +412,7 @@ const ExhausterInfo = () => {
             </div>
           </div>
           <div
-            className="bg-green-500 rounded p-4 col-span-2"
+            className={`rounded p-4 col-span-2 ${bearingStyles[exhausterStatus(status["bearing_9"])]}`}
             onMouseEnter={handleEnter("ps-9")}
             onMouseLeave={handleLeave}
           >
