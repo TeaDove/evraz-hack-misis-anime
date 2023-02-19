@@ -82,10 +82,10 @@ services:
       - 3000:3000
     restart: unless-stopped
     volumes:
-      - ./app/data/grafana/datasources:/etc/grafana/provisioning/datasources
-      - ./app/data/grafana/dashboards:/var/lib/grafana/dashboards
-      - ./app/data/grafana/datasources:/etc/grafana/datasources
-      - ./app/data/grafana/plugins:/var/lib/grafana/plugins
+      - ./backend/app/data/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./backend/app/data/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./backend/app/data/grafana/datasources:/etc/grafana/datasources
+      - ./backend/app/data/grafana/plugins:/var/lib/grafana/plugins
 
   postgres:
     image: postgres:15.2-alpine
@@ -97,8 +97,8 @@ services:
       - "5432:5432"
     restart: unless-stopped
     volumes:
-      - ./extra/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./app/data/pg/:/var/lib/postgresql/data/
+      - ./backend/extra/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/app/data/pg/:/var/lib/postgresql/data/
     networks:
       - backend
 
@@ -108,8 +108,6 @@ services:
       - 80:80
     depends_on:
       - backend_web
-    networks:
-      - backend
 
 networks:
   backend:

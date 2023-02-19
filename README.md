@@ -27,10 +27,19 @@
 Swagger доступен по http://158.160.13.117:8000/docs
 
 ### Запуск
-- backend:
+- Все сразу:
+```bash
+docker-compose up
 ```
+- backend:
+```bash
 cd backend
 docker-compose up
+```
+- frontend:
+```bash
+cd frontend
+yarn install && yarn dev --host=10.129.0.25 --port=80
 ```
 
 ### Нагрузочное тестирование
