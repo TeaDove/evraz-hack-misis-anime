@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Header, StatusBadge} from "../components"
-import {fetchExhausters} from "../common"
+import {exhausterStatus, fetchExhausters} from "../common"
 import {Button, Table, Tooltip} from "@nextui-org/react"
 import moment from "moment"
 import {useAsyncList} from "@nextui-org/react"
@@ -41,6 +41,8 @@ const MainPage = () => {
       }
     }
 
+    const status = exhausterStatus(item["status"])
+
     return (
       <Table.Row key={exhauster_id}>
         <Table.Cell>{name}</Table.Cell>
@@ -48,7 +50,9 @@ const MainPage = () => {
         <Table.Cell>{displayDate(last_replacement)}</Table.Cell>
         <Table.Cell>{displayDate(next_replacement_prediction)}</Table.Cell>
         <Table.Cell>
-          <StatusBadge color="positive">ОК</StatusBadge>
+          <StatusBadge
+            color={status}
+          >{status}</StatusBadge>
         </Table.Cell>
       </Table.Row>
     )
