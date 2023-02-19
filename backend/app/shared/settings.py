@@ -32,7 +32,7 @@ class AppSettings(BaseSettings):
     uvicorn_log_level: str = "WARNING"
 
     max_temperature_celsius: int = 1000
-    min_temperature_celsius: int = 100
+    min_temperature_celsius: int = -100
 
     class Config:
         env_prefix = "misis_"

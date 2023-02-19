@@ -40,6 +40,18 @@ class MappingService:
                     "Код сигнала в Kafka"
                 ]
 
+    def _get_value_with_validation(
+        self, record: Dict[str, Any], exhauster_id: int, row: int
+    ) -> Optional[float]:
+        value = record.get(self.exhauster_row_to_signal_id[(exhauster_id, row)])
+        if value is None:
+            return None
+
+        if not self._validate_temperature(value):
+            return None
+
+        return value
+
     def _get_value(
         self, record: Dict[str, Any], exhauster_id: int, row: int
     ) -> Optional[float]:
@@ -53,6 +65,15 @@ class MappingService:
             return None
         return bool(int(value))
 
+    def _validate_temperature(self, value: float) -> bool:
+        if (
+            value > app_settings.max_temperature_celsius
+            or value < app_settings.min_temperature_celsius
+        ):
+            logger.warning("temperature.is.unrealistic: {}", value)
+            return False
+        return True
+
     def _get_temperature(
         self, record: Dict[str, Any], exhauster_id: int, start_row: int
     ) -> AlarmableValue:
@@ -61,11 +82,7 @@ class MappingService:
         if value is None:
             return alarmable_value
 
-        if (
-            value > app_settings.max_temperature_celsius
-            or value < app_settings.min_temperature_celsius
-        ):
-            logger.warning("temperature.is.unrealistic: {}", alarmable_value.json())
+        if not self._validate_temperature(value):
             alarmable_value.value = None
             alarmable_value.status = AlarmStatuses.UNKNOWN
 
@@ -172,16 +189,26 @@ class MappingService:
         )
 
         exhauster_event.status.cooler_water = TemperatureValue(
-            temperature_after=self._get_value(record, exhauster_id, 105),
-            temperature_before=self._get_value(record, exhauster_id, 106),
+            temperature_after=self._get_value_with_validation(
+                record, exhauster_id, 105
+            ),
+            temperature_before=self._get_value_with_validation(
+                record, exhauster_id, 106
+            ),
         )
         exhauster_event.status.cooler_oil = TemperatureValue(
-            temperature_after=self._get_value(record, exhauster_id, 107),
-            temperature_before=self._get_value(record, exhauster_id, 108),
+            temperature_after=self._get_value_with_validation(
+                record, exhauster_id, 107
+            ),
+            temperature_before=self._get_value_with_validation(
+                record, exhauster_id, 108
+            ),
         )
 
         exhauster_event.status.gas_collector = GasCollectorValue(
-            temperature_before=self._get_value(record, exhauster_id, 109),
+            temperature_before=self._get_value_with_validation(
+                record, exhauster_id, 109
+            ),
             underpressure_before=self._get_value(record, exhauster_id, 110),
         )
 

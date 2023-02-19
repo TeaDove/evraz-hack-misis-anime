@@ -24,7 +24,9 @@ class StreamService:
 
     def process_record(self, record: Dict[str, Any]) -> None:
         for idx in range(self.mapping_service.exhauster_count):
-            exhauster_event = ExhausterEvent(created_at=record.get("moment"), exhauster_id=idx)
+            exhauster_event = ExhausterEvent(
+                created_at=record.get("moment"), exhauster_id=idx
+            )
             self.mapping_service.map_signals(exhauster_event, record)
             self.mongo_repository.insert_event(exhauster_event, record)
             self.pg_repository.insert_event(exhauster_event)
@@ -38,12 +40,16 @@ class StreamService:
         folder = Path("data/kafka_records_concat")
         folder.mkdir(exist_ok=True)
 
-        pd.json_normalize(events).to_parquet(folder / f"{datetime.utcnow().strftime('%Y-%m-%dT%H:%M')}.pqt")
+        pd.json_normalize(events).to_parquet(
+            folder / f"{datetime.utcnow().strftime('%Y-%m-%dT%H:%M')}.pqt"
+        )
 
     def store_records_localy(self, record: Dict[str, Any]) -> None:
         events = []
         for idx in range(self.mapping_service.exhauster_count):
-            exhauster_event = ExhausterEvent(created_at=record.get("moment"), exhauster_id=idx)
+            exhauster_event = ExhausterEvent(
+                created_at=record.get("moment"), exhauster_id=idx
+            )
             self.mapping_service.map_signals(exhauster_event, record)
             events.append(exhauster_event.dict())
 

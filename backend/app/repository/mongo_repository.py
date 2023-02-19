@@ -75,7 +75,7 @@ class MongoRepository:
             self.collection_exhauster.insert_one(document=exhauster.jsonable_dict())
             logger.info("exhauster.created.{}", exhauster.exhauster_id)
         except DuplicateKeyError:
-            logger.exception("duplicated.key", exc_info=True)
+            logger.warning("duplicated.key", exc_info=True)
 
     def get_exhausters(self) -> Iterable[Exhauster]:
         curs = self.collection_exhauster.find()
